@@ -1,7 +1,7 @@
 var WATER = D1;
 var FEED = D2;
-var TIME_WATERING = 60; // in seconds
-var TIME_FEEDING = 5; // in seconds
+var TIME_WATERING = 300; // in seconds
+var TIME_FEEDING = 30; // in seconds
 var AVERAGE_READINGS = 6; // readings per entry in our history arrays
 var hadWater = false;
 
@@ -17,7 +17,7 @@ function waterPlants(feedAsWell) {
   setTimeout(function() {
     WATER.reset();
   }, TIME_WATERING*1000);
-  
+
   if (feedAsWell) {
     FEED.set();
     setTimeout(function() {
@@ -26,7 +26,7 @@ function waterPlants(feedAsWell) {
   }
 }
 
-             
+
 function onTick() {
   // take readings and store them in a history array
   tempAverage += E.getTemperature();
@@ -44,7 +44,7 @@ function onTick() {
     readingCount = 0;
   }
   // check about our plant watering
-  var now = new Date(); 
+  var now = new Date();
   var h = now.getHours();
   var day = now.getDay(); // day of week
   var isMorning = h==8;
@@ -70,3 +70,11 @@ NRF.setAdvertising({
 
 // Check watering every 10 minutes
 setInterval(onTick, 10*60000);
+
+// When a button is pressed, do 30 seconds of watering
+setWatch(function() {
+  WATER.set();
+  setTimeout(function() {
+    WATER.reset();
+  }, 30000);
+}, BTN, {edge:"rising",debounce:50,repeat:true});

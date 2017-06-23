@@ -40,7 +40,7 @@
        temp : TD.graph({x:210,y:260,width:400,height:180,label:"Temperature"}),
        feed : TD.toggle({x:10,y:370,width:190,height:70,label:"Feed",value:1,onchange:function(el,v) {
          // either set the feed time to 5 seconds or nothing
-         Puck.write("TIME_FEEDING="+(v?5:0)+";\n");
+         Puck.write("TIME_FEEDING="+(v?30:0)+";\n");
        }}),
        modal: TD.modal({x:10,y:10,width:600,height:430,label:"Click to connect",onchange:connectDevice})
      }
