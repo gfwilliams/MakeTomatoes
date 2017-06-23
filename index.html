@@ -1,0 +1,51 @@
+<html>
+ <head>
+   <meta name="viewport" content="width=620, initial-scale=1">
+ </head>
+ <body style="width:620px;height:450px">
+   <link href="tinydash.css" rel="stylesheet">
+   <script src="tinydash.js"></script>
+   <script src="https://www.puck-js.com/puck.js"></script>
+   <script>
+     function connectDevice() {
+       // connect, and ask for the battery percentage and state of feeding
+       Puck.eval("{bat:Puck.getBatteryPercentage(), feed:TIME_FEEDING}", function(d) {
+         if (!d) {
+           alert("Web Bluetooth connection failed!");
+           return;
+         }
+         // remove the 'connect' window
+         elements.modal.remove();
+         // update the controls with the values we received
+         elements.bat.setValue(d.bat);
+         elements.feed.setValue(d.feed!=0);
+         // now get the histories - these could take a while
+         // so we do them separately.
+         Puck.eval("lightHistory", function(d) {
+           elements.light.setData(d);
+           Puck.eval("tempHistory", function(d) {
+             elements.temp.setData(d);
+           });
+         });
+       });
+     }
+     // Set up the controls we see on the screen
+     var elements = {
+       heading : TD.label({x:10,y:10,width:190,height:50,label:"Puck.js Tomato Waterer"}),
+       water : TD.button({x:10,y:70,width:190,height:90,label:"Water Plants",onchange:function(){
+         Puck.write("waterPlants()\n");
+       }}),
+       bat : TD.guage({x:10,y:170,width:190,height:190,label:"Battery Level",value:0,min:0,max:100}),
+       light : TD.graph({x:210,y:70,width:400,height:180,label:"Light"}),
+       temp : TD.graph({x:210,y:260,width:400,height:180,label:"Temperature"}),
+       feed : TD.toggle({x:10,y:370,width:190,height:70,label:"Feed",value:1,onchange:function(el,v) {
+         // either set the feed time to 5 seconds or nothing
+         Puck.write("TIME_FEEDING="+(v?5:0)+";\n");
+       }}),
+       modal: TD.modal({x:10,y:10,width:600,height:430,label:"Click to connect",onchange:connectDevice})
+     }
+     for (var i in elements)
+       document.body.appendChild(elements[i]);
+   </script>
+ </body>
+</html>
