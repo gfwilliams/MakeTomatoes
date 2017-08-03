@@ -10,7 +10,7 @@ function waterPlants(water, feed) {
 }
 
 // Check watering every 10 minutes
-function checkWater() {
+function onTick() {
   var now = new Date();
   var h = now.getHours();
   var day = now.getDay(); // day of week
@@ -23,7 +23,7 @@ function checkWater() {
     hadWater = false;
   }
 }
-setInterval(checkWater, 10*60000);
+setInterval(onTick, 10*60000);
 
 // When a button is pressed, water for 30 sec
 setWatch(function() {
