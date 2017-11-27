@@ -81,20 +81,35 @@ body {
 .td_val {
   text-align: center;
 }
+.td_val div {
+  display:inline-block;
+}
 .td_val_a {
   margin-top: 20px;
   font-size: 20px;
   color: #09F;
 }
+.td_val_b {
+  margin-left: 10px;
+  margin-right: 10px;
+  font-size: 20px;
+  color: #09F;
+  cursor: pointer;
+  user-select: none;
+}
+.td_val_b:hover {
+  color:#fff;
+}
 
-.td_guage {
+
+.td_gauge {
   text-align: center;
 }
-.td_guage canvas {
+.td_gauge canvas {
   width: 100%;
   height: 100%;
 }
-.td_guage_a {
+.td_gauge_a {
   position: absolute;
   left: 0px; right: 0px; top: 50%;
   font-size: 40px;
