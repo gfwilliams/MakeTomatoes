@@ -1,8 +1,8 @@
 var WATER = D1;
 var FEED = D2;
-var TIME_WATERING = 300; // in seconds
-var TIME_FEEDING = 30; // in seconds
-var AVERAGE_READINGS = 6; // readings per entry in our history arrays
+var TIME_WATERING = 3*60; // in seconds
+var TIME_FEEDING = 60; // in seconds
+var AVERAGE_READINGS = 2; // readings per entry in our history arrays
 var hadWater = false;
 
 var tempHistory = new Int8Array(100);
@@ -68,8 +68,8 @@ change the hours in 'onTick' manually */
 NRF.setAdvertising({
 }, {name:"Puck.js Waterer"});
 
-// Check watering every 10 minutes
-setInterval(onTick, 10*60000);
+// Check watering every 30 minutes
+setInterval(onTick, 30*60000);
 
 // When a button is pressed, do 30 seconds of watering
 setWatch(function() {
